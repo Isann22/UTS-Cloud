@@ -1,6 +1,10 @@
 import { getAllReports } from '@/lib/db/queries';
 import MapViewClient from './MapViewClient';
 
+// Force dynamic rendering - don't try to statically generate this page
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function MapViewPage() {
   const reports = await getAllReports();
 

@@ -1,6 +1,10 @@
 import { getAllReports } from '@/lib/db/queries';
 import ReportListClient from './ReportListClient';
 
+// Force dynamic rendering - don't try to statically generate this page
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function ReportsPage() {
   const reports = await getAllReports();
 
