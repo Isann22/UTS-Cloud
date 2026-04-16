@@ -1,5 +1,5 @@
 # Base stage
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # Install dependencies stage
 FROM base AS deps
@@ -20,6 +20,18 @@ COPY --from=deps /app/node_modules ./node_modules
 
 # Copy application files
 COPY . .
+
+ARG DATABASE_URL
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_REGION
+ARG AWS_BUCKET_NAME
+
+ENV DATABASE_URL=$DATABASE_URL
+ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+ENV AWS_REGION=$AWS_REGION
+ENV AWS_BUCKET_NAME=$AWS_BUCKET_NAME
 
 # Build the Next.js application
 RUN npm run build
