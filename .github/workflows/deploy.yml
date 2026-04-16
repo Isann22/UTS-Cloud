@@ -29,8 +29,8 @@ jobs:
 
       - name: Build docker compose
         run: |
-          docker compose build
-          docker save trash-track-app trash-track-nginx | gzip > images.tar.gz
+          docker compose -f docker-compose.build.yml build
+          docker save trash-track-app:latest trash-track-nginx:latest | gzip > images.tar.gz
 
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.7
