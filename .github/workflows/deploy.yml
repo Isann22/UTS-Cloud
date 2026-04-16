@@ -61,12 +61,18 @@ jobs:
             NODE_ENV=production
             EOF
             
-            # Load Docker images
+            # Stop and remove old containers
+            docker compose down
+            
+            # Clean up old Docker images and containers to free space
+            echo "Cleaning up old Docker resources..."
+            docker system prune -af --volumes
+            
+            # Load new Docker images
             docker load < images.tar.gz
             rm images.tar.gz
             
-            # Deploy containers
-            docker compose down
+            # Start containers
             docker compose up -d
             
             # Wait for containers to be ready
@@ -76,7 +82,8 @@ jobs:
             # Run database migrations
             echo "Running database migrations..."
             docker compose exec -T app npm run db:push
-            sleep 5
+            
+            echo "Creating admin user..."
             docker compose exec -T app npm run create-admin 
             
             # Show container status
