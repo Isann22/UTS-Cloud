@@ -77,6 +77,7 @@ export default function ReportDetailClient({ report }: ReportDetailClientProps) 
                   alt="Foto laporan"
                   fill
                   className="object-cover"
+                  unoptimized
                 />
               </div>
             </div>

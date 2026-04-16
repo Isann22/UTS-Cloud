@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -8,6 +8,17 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['react-leaflet', 'leaflet'],
   },
-};
 
-export default nextConfig;
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'uts-cloud-bucket.s3.ap-southeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+}
+
+export default nextConfig
