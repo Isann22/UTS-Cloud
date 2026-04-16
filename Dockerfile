@@ -33,9 +33,6 @@ ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV AWS_REGION=$AWS_REGION
 ENV AWS_BUCKET_NAME=$AWS_BUCKET_NAME
 
-# Generate database migrations
-RUN npm run db:generate
-
 # Build the Next.js application
 RUN npm run build
 
