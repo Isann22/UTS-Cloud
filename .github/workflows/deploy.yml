@@ -52,13 +52,13 @@ jobs:
             cd ~/trash-track
             docker load < images.tar.gz
             rm images.tar.gz
-            docker-compose down
-            docker-compose up -d
+            docker compose down
+            docker compose up -d
             echo "Waiting for containers to be ready..."
             sleep 5
             echo "Running database migrations..."
-            docker-compose exec -T app npm run db:push
+            docker compose exec -T app npm run db:push
             sleep 5
-            docker-compose exec -T app npm run create-admin 
-            docker-compose ps
+            docker compose exec -T app npm run create-admin 
+            docker compose ps
             echo "Deployment completed successfully!"
