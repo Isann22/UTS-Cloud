@@ -50,15 +50,35 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/trash-track
+            
+            # Create .env file from GitHub Secrets
+            cat > .env << EOF
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION=${{ secrets.AWS_REGION }}
+            AWS_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }}
+            NODE_ENV=production
+            EOF
+            
+            # Load Docker images
             docker load < images.tar.gz
             rm images.tar.gz
+            
+            # Deploy containers
             docker compose down
             docker compose up -d
+            
+            # Wait for containers to be ready
             echo "Waiting for containers to be ready..."
             sleep 5
+            
+            # Run database migrations
             echo "Running database migrations..."
             docker compose exec -T app npm run db:push
             sleep 5
             docker compose exec -T app npm run create-admin 
+            
+            # Show container status
             docker compose ps
             echo "Deployment completed successfully!"
