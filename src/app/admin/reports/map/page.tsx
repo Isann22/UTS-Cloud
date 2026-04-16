@@ -1,5 +1,5 @@
 import { getAllReports } from '@/lib/db/queries';
-import GlobalMap from '@/features/admin/components/GlobalMap';
+import MapViewClient from './MapViewClient';
 
 export default async function MapViewPage() {
   const reports = await getAllReports();
@@ -33,7 +33,7 @@ export default async function MapViewPage() {
               <span className="text-gray-700 font-medium">Selesai</span>
             </div>
           </div>
-          <GlobalMap reports={reports} />
+          <MapViewClient reports={reports} />
         </div>
       )}
     </div>
