@@ -53,6 +53,9 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy package.json for npm scripts
 COPY --from=builder /app/package.json ./package.json
 
+# Copy TypeScript config (needed for drizzle-kit and tsx)
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+
 # Copy drizzle config and migrations
 COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder /app/drizzle ./drizzle
