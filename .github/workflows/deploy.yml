@@ -27,9 +27,9 @@ jobs:
           NODE_ENV=production
           EOF
 
-      - name: Build docker-compose
+      - name: Build docker compose
         run: |
-          docker-compose build
+          docker compose build
           docker save trash-track-app trash-track-nginx | gzip > images.tar.gz
 
       - name: Copy files to EC2
