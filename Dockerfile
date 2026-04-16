@@ -47,6 +47,20 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+# Copy node_modules for migration tools (drizzle-kit, tsx)
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy package.json for npm scripts
+COPY --from=builder /app/package.json ./package.json
+
+# Copy drizzle config and migrations
+COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/drizzle ./drizzle
+COPY --from=builder /app/src/lib/db ./src/lib/db
+
+# Copy scripts for admin creation
+COPY --from=builder /app/scripts ./scripts
+
 # Copy public assets
 COPY --from=builder /app/public ./public
 
